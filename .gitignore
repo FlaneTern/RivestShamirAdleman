@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+# mine
+RivestShamirAdleman/RivestShamirAdleman_TempSourceCode.zip
