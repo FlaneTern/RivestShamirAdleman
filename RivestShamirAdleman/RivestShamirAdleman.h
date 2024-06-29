@@ -5,10 +5,14 @@ class RSA
 public:
 	RSA();
 	RSA(uint32_t primeLength);
+
 	std::string Encrypt(std::string plaintext, bool log, bool printDecimal);
 	std::string Decrypt(std::string ciphertext, bool log, bool printDecimal);
 
 	void Log(bool printDecimal);
+
+	RSA(std::string filePath);
+	void Save(std::string filePath);
 
 private:
 

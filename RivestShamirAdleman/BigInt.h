@@ -9,6 +9,7 @@ public:
     BigInt(const BigInt& other);
     BigInt(std::string str);
     BigInt(uint32_t i);
+    BigInt(std::byte* ptr, uint32_t& outOffset);
 
     inline std::vector<uint32_t> Value() const { return m_Value; }
     inline uint32_t Length() const { return m_Value.size(); }

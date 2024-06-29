@@ -150,3 +150,60 @@ std::string RSA::BigIntToText(std::vector<BigInt> bigInts, uint32_t length)
 	return text;
 }
 
+std::string RelativePathToAbsolutePath(std::string path)
+{
+	std::cout << "path of " << path << " = " << std::filesystem::current_path().string() + "\\" + path << '\n';
+	return std::filesystem::current_path().string() + "\\" + path;
+}
+
+RSA::RSA(std::string filePath)
+{
+	std::ifstream file(RelativePathToAbsolutePath(filePath), std::ios::binary);
+
+	file.seekg(0, std::ios::end);
+	size_t length = file.tellg();
+	file.seekg(0, std::ios::beg);
+
+	std::vector<std::byte> binary(length);
+	std::byte* ptr = binary.data();
+
+	file.read((char*)ptr, length);
+
+	file.close();
+
+	uint32_t offset = 0;
+
+	m_P = BigInt(ptr + offset, offset);
+	m_Q = BigInt(ptr + offset, offset);
+	m_N = BigInt(ptr + offset, offset);
+	m_LambdaN = BigInt(ptr + offset, offset);
+	m_E = BigInt(ptr + offset, offset);
+	m_D = BigInt(ptr + offset, offset);
+}
+
+void RSA::Save(std::string filePath)
+{
+	std::ofstream file(RelativePathToAbsolutePath(filePath), std::ios::binary);
+
+	std::vector<std::byte> binary;
+
+	binary = m_P.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	binary = m_Q.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	binary = m_N.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	binary = m_LambdaN.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	binary = m_E.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	binary = m_D.ToBinary();
+	file.write((const char*)binary.data(), binary.size());
+
+	file.close();
+}

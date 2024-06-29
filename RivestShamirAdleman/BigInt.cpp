@@ -492,4 +492,17 @@ std::vector<std::byte> BigInt::ToBinary()
     bytes.resize(bytes.size() + Length() * sizeof(m_Value[0]));
     std::memcpy(&bytes[bytesSize], &m_Value[0], Length() * sizeof(m_Value[0]));
     bytesSize = bytes.size();
+
+    return bytes;
+}
+
+BigInt::BigInt(std::byte* ptr, uint32_t& outOffset)
+{
+    uint32_t length;
+    std::memcpy(&length, ptr, sizeof(length));
+
+    m_Value.resize(length);
+    memcpy(m_Value.data(), ptr + sizeof(length), length * sizeof(uint32_t));
+
+    outOffset += sizeof(length) + length * sizeof(uint32_t);
 }
