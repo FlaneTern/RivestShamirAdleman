@@ -4,7 +4,7 @@
 
 int main() {
 
-#if 1
+#if 0
 	std::string plaintext = R"(Once upon a time, in a small village nestled between rolling hills, there lived a young girl named Lila. Lila was known far and wide for her kindness and her love for animals. She had a special bond with a wounded sparrow she had rescued and nursed back to health, naming him Pip.
 
 		One day, as Lila was gathering herbs in the forest, she heard a faint cry for help.Following the sound, she stumbled upon a tiny fairy trapped in a thorny bush.The fairy's name was Elara, and she had been searching for her lost wand.
@@ -33,12 +33,13 @@ brown fox jumps over the lazy dog.)";
 	bool log = true;
 
 	//RSA rsa;
-	RSA rsa("Test length 4");
+	RSA rsa(4);
+	//RSA rsa("Test length 32");
 	rsa.Log(printDecimal);
 	std::string ciphertext = rsa.Encrypt(plaintext, log, printDecimal);
 	std::string plaintext2 = rsa.Decrypt(ciphertext, log, printDecimal);
 
-	//rsa.Save("Test length 4");
+	rsa.Save("Test length 4_2");
 
 	std::cin.get();
 

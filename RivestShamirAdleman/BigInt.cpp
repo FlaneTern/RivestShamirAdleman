@@ -236,8 +236,6 @@ BigInt operator/(BigInt a, BigInt b) {
 
     std::reverse(result.begin(), result.end());
 
-    BigInt resultB(result);
-
     return BigInt(result);
 }
 
@@ -246,8 +244,69 @@ BigInt operator%(BigInt a, BigInt b) {
     a.RemoveLeadingZeroes();
     b.RemoveLeadingZeroes();
 
-    return a - (b * (a / b));
+    BigInt temp = (b * (a / b));
+
+    return a - temp;
 }
+//
+//BigInt operator%(BigInt a, BigInt b) {
+//
+//    if (a < b)
+//        return a;
+//
+//    if (b == 0)
+//        throw std::runtime_error("MODULO BY ZERO");
+//
+//
+//    a.RemoveLeadingZeroes();
+//    b.RemoveLeadingZeroes();
+//
+//    BigInt f(std::vector<uint32_t>{ (uint32_t)(((uint64_t)1 << 32) / ((uint64_t)b[b.Length() - 1] + 1))});
+//    a = a * f;
+//    b = b * f;
+//    a.RemoveLeadingZeroes();
+//    b.RemoveLeadingZeroes();
+//
+//
+//    if (a.Length() == 1 && b.Length() == 1)
+//        return BigInt(a[0] % b[0]);
+//
+//    a.PrefixZero();
+//
+//    int aLengthOri = a.Length();
+//
+//    std::vector<uint32_t> result;
+//
+//    for (int i = 0; i < a.Length() - b.Length(); i++) {
+//        BigInt idd = a.SubInt(a.Length() - i - 1 - b.Length(), a.Length() - i - 1);
+//
+//        uint64_t xy = ((uint64_t)idd[idd.Length() - 1] << 32) + (uint64_t)idd[idd.Length() - 2];
+//
+//        uint64_t d = (xy / (uint64_t)b[b.Length() - 1]);
+//
+//        for (uint32_t j = 0; j < 3; j++) {
+//            BigInt di(std::vector<uint32_t>{(uint32_t)d - j});
+//            BigInt temp = b * di;
+//
+//            if (idd >= temp) {
+//                result.push_back(d - j);
+//
+//                temp.Shift32(a.Length() - b.Length() - i - 1);
+//                a = a - temp;
+//                while (a.Length() < aLengthOri)
+//                    a.PrefixZero();
+//                break;
+//            }
+//
+//            if (j == 2)
+//                throw std::runtime_error("DIVISION IS NOT WORKING =(");
+//        }
+//    }
+//
+//    //std::reverse(result.begin(), result.end());
+//
+//    return a;
+//}
 
 BigInt Exponent(BigInt a, BigInt exponent) {
     BigInt res = 1;

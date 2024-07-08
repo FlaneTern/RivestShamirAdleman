@@ -9,9 +9,10 @@ RSA::RSA()
 RSA::RSA(uint32_t primeLength)
 {
 	std::cout << "Generating P..." << '\n';
-	m_P = BigInt::GenerateRandomPrime(4);
+	m_P = BigInt::GenerateRandomPrime(primeLength);
 	std::cout << "Generating Q..." << '\n';
-	m_Q = BigInt::GenerateRandomPrime(4);
+	m_Q = BigInt::GenerateRandomPrime(primeLength);
+	std::cout << "Done Generating P and Q!" << '\n';
 	m_N = m_P * m_Q;
 	m_LambdaN = LCM(m_P - 1, m_Q - 1);
 	m_E = 65537;
@@ -152,7 +153,6 @@ std::string RSA::BigIntToText(std::vector<BigInt> bigInts, uint32_t length)
 
 std::string RelativePathToAbsolutePath(std::string path)
 {
-	std::cout << "path of " << path << " = " << std::filesystem::current_path().string() + "\\" + path << '\n';
 	return std::filesystem::current_path().string() + "\\" + path;
 }
 
