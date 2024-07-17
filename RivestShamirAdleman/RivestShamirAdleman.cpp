@@ -26,6 +26,8 @@ std::string RSA::Encrypt(std::string plaintext, bool log, bool printDecimal)
 {
 	if (log)
 		std::cout << "Starting Encryption of Plaintext :\n" << plaintext << "\n\n\n";
+	
+	plaintext.resize(plaintext.size() + 1, '\0');
 
 	std::vector<BigInt> plaintexts = TextToBigInt(plaintext, m_N.Length() - 1);
 
@@ -101,6 +103,15 @@ std::string RSA::Decrypt(std::string ciphertext, bool log, bool printDecimal)
 	}
 
 	std::string plaintext = BigIntToText(plaintexts, m_N.Length() - 1);
+
+	bool foundNullTerminator = false;
+	for (int i = 0; i < plaintext.length(); i++)
+	{
+		if (foundNullTerminator)
+			plaintext[i] = '0';
+		else if (plaintext[i] == '\0')
+			foundNullTerminator = true;
+	}
 
 	std::cout << "Decrypted Plaintext :\n";
 	std::cout << plaintext << "\n\n\n";
