@@ -83,7 +83,6 @@ BigInt operator+(BigInt a, BigInt b) {
     std::vector<uint32_t> result(b.Length() + 1);
 
     int i = 0;
-
     for (; i < a.Length(); i++) {
         result[i] += a[i] + b[i];
         if (result[i] < a[i]) 
@@ -111,17 +110,11 @@ BigInt operator-(BigInt a, BigInt b) {
     bool borrow = false;
     for (int i = 0; i < b.Length(); i++) {
         if (borrow) {
-            if (a[i] - 1 < b[i])
-                borrow = true;
-            else
-                borrow = false;
+            borrow = (a[i] - 1 < b[i]);
             result[i] = a[i] - b[i] - 1;
         }
         else {
-            if (a[i] < b[i])
-                borrow = true;
-            else
-                borrow = false;
+            borrow = (a[i] < b[i]);
             result[i] = a[i] - b[i];
         }
     }
@@ -159,11 +152,10 @@ BigInt operator*(BigInt a, BigInt b) {
             uint32_t* high = (uint32_t*)&prod + 1;
 
             temp[i] += *low;
+            temp[i + 1] += *high;
 
             if (temp[i] < *low) 
                 temp[i + 1]++;
-
-            temp[i + 1] += *high;
 
             if (temp[i + 1] < *high) 
                 temp[i + 2]++;
