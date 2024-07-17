@@ -500,8 +500,10 @@ BigInt BigInt::GenerateRandomPrime(uint64_t length)
 {
     BigInt num = GenerateRandom(length);
     num.m_Value[0] |= 1;
-    while(!TestPrime(num))
+    while(!TestPrime(num)) {
         num = GenerateRandom(length);
+        num.m_Value[0] |= 1;
+    }
 
     return num;
 }
