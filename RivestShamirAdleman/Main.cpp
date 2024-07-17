@@ -35,7 +35,7 @@ int main()
 	std::string ciphertext = rsa.Encrypt(plaintext, log, printDecimal);
 	std::string plaintext2 = rsa.Decrypt(ciphertext, log, printDecimal);
 
-	//rsa.Save("Test length 32_2");
+	//rsa.Save("Key Length 1024_2");
 
 	std::cin.get();
 
