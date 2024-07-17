@@ -10,9 +10,12 @@ RSA::RSA(uint32_t primeLength)
 {
 	std::cout << "Generating P..." << '\n';
 	m_P = BigInt::GenerateRandomPrime(primeLength);
+
 	std::cout << "Generating Q..." << '\n';
 	m_Q = BigInt::GenerateRandomPrime(primeLength);
+
 	std::cout << "Done Generating P and Q!" << '\n';
+
 	m_N = m_P * m_Q;
 	m_LambdaN = LCM(m_P - 1, m_Q - 1);
 	m_E = 65537;
